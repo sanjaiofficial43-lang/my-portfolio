@@ -91,19 +91,6 @@ export const SKILL_CATEGORIES = [
     ],
   },
   {
-    id: "programming",
-    name: "Programming",
-    iconName: "Terminal",
-    description: "Core languages, systems programming, and algorithmic design.",
-    skills: [
-      { name: "Python", level: "Specialized", detail: "AI Scripting, Data Pipelines, PyTorch & FastAPIs" },
-      { name: "JavaScript / ESNext", level: "Specialized", detail: "Event Loop, Memory Profiling & Modern Syntaxes" },
-      { name: "TypeScript", level: "Specialized", detail: "Type-Level Programming & Compiler Architecture" },
-      { name: "SQL & Databases", level: "Proficient", detail: "PostgreSQL, Vector Stores (pgvector) & Schema Design" },
-      { name: "Systems & Bash", level: "Proficient", detail: "Linux Environments, Shell Scripting & Containerization" },
-    ],
-  },
-  {
     id: "automation",
     name: "AI Automation",
     iconName: "Bot",
@@ -185,13 +172,13 @@ export const PROJECTS_DATA = [
 export const JOURNEY_TIMELINE = [
   {
     phase: "PHASE 01",
-    title: "Foundations of Code & Computational Logic",
-    focus: "Software Engineering Core",
-    description: "Began by mastering core algorithms, data structures, and computer science fundamentals. Developed deep fluency in modern web standards, semantic architecture, and responsive design systems.",
+    title: "Foundations of Modern Web & Interactive Systems",
+    focus: "Modern Web Foundations",
+    description: "Began with modern web engineering, reactive user interfaces, and component architectures. Developed deep fluency in web standards, clean code principles, and responsive design systems.",
     milestones: [
-      "Deep dive into JavaScript execution model and browser runtime",
-      "Building scalable state-driven UI applications",
-      "Architectural patterns in modern full-stack web platforms",
+      "Building responsive and scalable state-driven UI applications",
+      "Mastering modern JavaScript and component-driven architecture",
+      "Crafting high-performance web interfaces",
     ],
   },
   {
