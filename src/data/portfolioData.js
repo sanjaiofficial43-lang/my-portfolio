@@ -5,17 +5,17 @@
  */
 
 export const PERSONAL_INFO = {
-  name: "[YOUR NAME]",
-  displayTag: "AI & WEB DEVELOPER",
-  roleHeadline: "BUILDING THE FUTURE WITH AI & CODE.",
-  subtitle: "AI Developer | Web Developer | Creative Technologist",
-  bioShort: "Pioneering the intersection of artificial intelligence, high-performance web systems, and interactive 3D digital realities.",
+  name: "Sanjay",
+  displayTag: "AI AUTOMATION & AGENTIC AI DEVELOPER",
+  roleHeadline: "BUILDING THE FUTURE WITH AI AUTOMATION & AGENTIC AI.",
+  subtitle: "Agentic AI | AI Automation | Web Developer | Creative Technologist",
+  bioShort: "Pioneering the intersection of AI automation, autonomous agentic systems, and interactive 3D digital realities.",
   status: "OPEN TO COLLABORATION & INQUIRIES",
   location: "GLOBAL // DIGITAL REALM",
-  email: "developer@intelligence.build", // Placeholder
-  linkedin: "https://linkedin.com/in/yourname-ai",
-  github: "https://github.com/yourname-ai",
-  xTwitter: "https://x.com/yourname_ai",
+  email: "sanjay.dev@intelligence.build",
+  linkedin: "https://linkedin.com/in/sanjay-ai",
+  github: "https://github.com/sanjay-ai",
+  xTwitter: "https://x.com/sanjay_ai",
 };
 
 export const ABOUT_DATA = {
@@ -141,7 +141,7 @@ export const PROJECTS_DATA = [
     imageType: "cyber-sphere",
     metrics: "Sub-16ms GPU Draw",
     demoUrl: "#",
-    githubUrl: "https://github.com/yourname-ai/neuromesh-3d",
+    githubUrl: "https://github.com/sanjay-ai/neuromesh-3d",
     featured: true,
   },
   {
@@ -153,7 +153,7 @@ export const PROJECTS_DATA = [
     imageType: "network-graph",
     metrics: "Multi-Agent Protocol",
     demoUrl: "#",
-    githubUrl: "https://github.com/yourname-ai/agent-matrix-core",
+    githubUrl: "https://github.com/sanjay-ai/agent-matrix-core",
     featured: true,
   },
   {
@@ -165,7 +165,7 @@ export const PROJECTS_DATA = [
     imageType: "waveform-pulse",
     metrics: "<80ms First Token",
     demoUrl: "#",
-    githubUrl: "https://github.com/yourname-ai/synapse-stream",
+    githubUrl: "https://github.com/sanjay-ai/synapse-stream",
     featured: true,
   },
   {
@@ -177,7 +177,7 @@ export const PROJECTS_DATA = [
     imageType: "quantum-particle",
     metrics: "10,000+ Instanced Points",
     demoUrl: "#",
-    githubUrl: "https://github.com/yourname-ai/quantum-viewport",
+    githubUrl: "https://github.com/sanjay-ai/quantum-viewport",
     featured: true,
   },
 ];

@@ -1,6 +1,6 @@
-# 🌌 Premium 3D Futuristic AI Developer Portfolio
+# 🌌 Sanjay - Premium 3D Futuristic AI Developer Portfolio
 
-An award-winning, cinematic personal portfolio built for an **AI Developer, Web Developer, and Creative Technologist**. Designed with an immersive dark-futuristic aesthetic, procedural 3D graphics in Three.js / React Three Fiber, and scroll-choreographed kinetic animations powered by GSAP ScrollTrigger and Lenis.
+An award-winning, cinematic personal portfolio built for **Sanjay**, an **AI Automation Specialist, Agentic AI Developer, Web Developer, and Creative Technologist**. Designed with an immersive dark-futuristic aesthetic, procedural 3D graphics in Three.js / React Three Fiber, and scroll-choreographed kinetic animations powered by GSAP ScrollTrigger and Lenis.
 
 ---
 
