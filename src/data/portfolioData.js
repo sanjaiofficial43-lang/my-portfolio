@@ -14,7 +14,7 @@ export const PERSONAL_INFO = {
   location: "GLOBAL // DIGITAL REALM",
   email: "sanjay.dev@intelligence.build",
   linkedin: "https://linkedin.com/in/sanjay-ai",
-  github: "https://github.com/sanjay-ai",
+  github: "https://github.com/sanjaiofficial43-lang",
   xTwitter: "https://x.com/sanjay_ai",
 };
 
@@ -128,7 +128,7 @@ export const PROJECTS_DATA = [
     imageType: "cyber-sphere",
     metrics: "Sub-16ms GPU Draw",
     demoUrl: "#",
-    githubUrl: "https://github.com/sanjay-ai/neuromesh-3d",
+    githubUrl: "https://github.com/sanjaiofficial43-lang/neuromesh-3d",
     featured: true,
   },
   {
@@ -140,7 +140,7 @@ export const PROJECTS_DATA = [
     imageType: "network-graph",
     metrics: "Multi-Agent Protocol",
     demoUrl: "#",
-    githubUrl: "https://github.com/sanjay-ai/agent-matrix-core",
+    githubUrl: "https://github.com/sanjaiofficial43-lang/agent-matrix-core",
     featured: true,
   },
   {
@@ -152,7 +152,7 @@ export const PROJECTS_DATA = [
     imageType: "waveform-pulse",
     metrics: "<80ms First Token",
     demoUrl: "#",
-    githubUrl: "https://github.com/sanjay-ai/synapse-stream",
+    githubUrl: "https://github.com/sanjaiofficial43-lang/synapse-stream",
     featured: true,
   },
   {
@@ -164,7 +164,7 @@ export const PROJECTS_DATA = [
     imageType: "quantum-particle",
     metrics: "10,000+ Instanced Points",
     demoUrl: "#",
-    githubUrl: "https://github.com/sanjay-ai/quantum-viewport",
+    githubUrl: "https://github.com/sanjaiofficial43-lang/quantum-viewport",
     featured: true,
   },
 ];
