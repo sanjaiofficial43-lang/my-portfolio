@@ -14,7 +14,7 @@ export default function Footer() {
         borderTop: '1px solid rgba(168, 85, 247, 0.15)',
         background: 'rgba(5, 5, 5, 0.85)',
         backdropFilter: 'blur(20px)',
-        padding: '48px 24px 36px',
+        padding: 'clamp(32px, 5vw, 48px) 16px 32px',
       }}
     >
       <div className="container" style={{ maxWidth: '1240px', margin: '0 auto' }}>

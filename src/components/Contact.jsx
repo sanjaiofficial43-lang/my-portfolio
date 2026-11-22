@@ -22,13 +22,13 @@ export default function Contact() {
         glowAuraRef.current,
         { scale: 0.6, opacity: 0 },
         {
-          scale: 1.2,
+          scale: 1.1,
           opacity: 0.85,
-          duration: 1.5,
+          duration: 1.4,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 75%',
+            start: 'top 78%',
             toggleActions: 'play none none reverse',
           },
         }
@@ -36,16 +36,16 @@ export default function Contact() {
 
       gsap.fromTo(
         contentCardRef.current,
-        { opacity: 0, y: 60, scale: 0.96 },
+        { opacity: 0, y: 50, scale: 0.97 },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 1,
+          duration: 0.9,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 70%',
+            start: 'top 75%',
             toggleActions: 'play none none reverse',
           },
         }
@@ -81,14 +81,14 @@ export default function Contact() {
       ref={sectionRef}
       style={{
         position: 'relative',
-        minHeight: '85vh',
+        minHeight: '80vh',
         display: 'flex',
         alignItems: 'center',
-        padding: '120px 24px',
+        padding: 'clamp(60px, 8vw, 120px) 16px',
         overflow: 'hidden',
       }}
     >
-      {/* Cinematic Purple Light Element / Background Lens Flare */}
+      {/* Cinematic Purple Light Element / Ambient Flare */}
       <div
         ref={glowAuraRef}
         style={{
@@ -96,12 +96,12 @@ export default function Contact() {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: '750px',
-          height: '750px',
+          width: 'min(750px, 90vw)',
+          height: 'min(750px, 90vw)',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(168, 85, 247, 0.28) 0%, rgba(126, 34, 206, 0.15) 40%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(168, 85, 247, 0.25) 0%, rgba(126, 34, 206, 0.12) 45%, transparent 70%)',
           pointerEvents: 'none',
-          filter: 'blur(90px)',
+          filter: 'blur(80px)',
           zIndex: 1,
         }}
       />
@@ -114,17 +114,21 @@ export default function Contact() {
           zIndex: 2,
           maxWidth: '1100px',
           margin: '0 auto',
+          width: '100%',
+          paddingLeft: '0',
+          paddingRight: '0',
         }}
       >
         <div
           className="glass-panel"
           style={{
-            padding: ' clamp(32px, 5vw, 64px)',
-            borderRadius: '28px',
+            padding: 'clamp(20px, 4vw, 56px)',
+            borderRadius: 'clamp(18px, 3vw, 28px)',
             border: '1px solid var(--border-glow)',
-            boxShadow: '0 25px 80px rgba(0, 0, 0, 0.8), 0 0 50px rgba(168, 85, 247, 0.2)',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(168, 85, 247, 0.18)',
             position: 'relative',
             overflow: 'hidden',
+            width: '100%',
           }}
         >
           {/* Subtle Top Cyber Accent Bar */}
@@ -132,8 +136,8 @@ export default function Contact() {
             style={{
               position: 'absolute',
               top: 0,
-              left: '15%',
-              right: '15%',
+              left: '10%',
+              right: '10%',
               height: '2px',
               background: 'linear-gradient(90deg, transparent, var(--purple-light), transparent)',
               boxShadow: '0 0 15px var(--purple-neon)',
@@ -143,14 +147,14 @@ export default function Contact() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '48px',
-              alignItems: 'center',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+              gap: 'clamp(28px, 4vw, 48px)',
+              alignItems: 'start',
             }}
           >
-            {/* Left Column: Transmission Brief & Channels */}
-            <div>
-              <div className="section-badge" style={{ marginBottom: '16px' }}>
+            {/* Left Column: Transmission Brief & Direct Channels */}
+            <div style={{ width: '100%', minWidth: 0 }}>
+              <div className="section-badge" style={{ marginBottom: '14px' }}>
                 <Sparkles size={13} />
                 <span>// 05. DIRECT TRANSMISSION</span>
               </div>
@@ -158,10 +162,12 @@ export default function Contact() {
               <h2
                 className="section-title text-gradient"
                 style={{
-                  fontSize: 'clamp(2rem, 3.8vw, 3rem)',
+                  fontSize: 'clamp(1.65rem, 4.5vw, 2.75rem)',
                   textTransform: 'uppercase',
-                  marginBottom: '18px',
+                  marginBottom: '16px',
                   letterSpacing: '-0.02em',
+                  lineHeight: 1.15,
+                  wordBreak: 'break-word',
                 }}
               >
                 LET'S BUILD SOMETHING INTELLIGENT.
@@ -170,76 +176,120 @@ export default function Contact() {
               <p
                 style={{
                   color: 'var(--text-secondary)',
-                  fontSize: '1.05rem',
-                  lineHeight: 1.65,
-                  marginBottom: '36px',
+                  fontSize: 'clamp(0.92rem, 1.8vw, 1.05rem)',
+                  lineHeight: 1.6,
+                  marginBottom: '28px',
                 }}
               >
                 Whether you're developing autonomous AI agent infrastructure, high-fidelity 3D web applications, or high-throughput digital systems, I am ready to engineer the vision.
               </p>
 
               {/* Direct Channels List */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                {/* Email Box */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', width: '100%' }}>
+                {/* Email Box - Mobile Optimized */}
                 <div
                   style={{
                     display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '12px 18px',
+                    flexDirection: 'column',
+                    gap: '12px',
+                    padding: '14px 16px',
                     borderRadius: '12px',
-                    background: 'rgba(24, 14, 44, 0.6)',
-                    border: '1px solid rgba(168, 85, 247, 0.2)',
+                    background: 'rgba(24, 14, 44, 0.7)',
+                    border: '1px solid rgba(168, 85, 247, 0.25)',
+                    width: '100%',
+                    boxSizing: 'border-box',
                   }}
+                  className="contact-email-card"
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <Mail size={18} color="#c084fc" />
-                    <div>
-                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <div
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          borderRadius: '8px',
+                          background: 'rgba(168, 85, 247, 0.15)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: '#c084fc',
+                        }}
+                      >
+                        <Mail size={16} />
+                      </div>
+                      <span
+                        style={{
+                          fontSize: '0.72rem',
+                          color: 'var(--text-muted)',
+                          fontFamily: 'var(--font-mono)',
+                          letterSpacing: '0.08em',
+                        }}
+                      >
                         DIRECT PROTOCOL
-                      </div>
-                      <div style={{ fontSize: '0.92rem', color: '#ffffff', fontWeight: 500 }}>
-                        {PERSONAL_INFO.email}
-                      </div>
+                      </span>
                     </div>
+
+                    <button
+                      onClick={handleCopyEmail}
+                      type="button"
+                      aria-label="Copy Email Address"
+                      style={{
+                        background: 'rgba(168, 85, 247, 0.15)',
+                        border: '1px solid rgba(168, 85, 247, 0.35)',
+                        color: copiedEmail ? '#4ade80' : 'var(--purple-light)',
+                        borderRadius: '8px',
+                        padding: '6px 12px',
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        fontSize: '0.78rem',
+                        fontFamily: 'var(--font-mono)',
+                        transition: 'all 0.2s ease',
+                        flexShrink: 0,
+                      }}
+                    >
+                      {copiedEmail ? <Check size={13} /> : <Copy size={13} />}
+                      <span>{copiedEmail ? 'Copied' : 'Copy'}</span>
+                    </button>
                   </div>
 
-                  <button
-                    onClick={handleCopyEmail}
+                  <div
                     style={{
-                      background: 'rgba(168, 85, 247, 0.15)',
-                      border: '1px solid rgba(168, 85, 247, 0.3)',
-                      color: copiedEmail ? '#4ade80' : 'var(--purple-light)',
-                      borderRadius: '8px',
-                      padding: '8px 12px',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      fontSize: '0.75rem',
-                      fontFamily: 'var(--font-mono)',
-                      transition: 'all 0.2s ease',
+                      fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
+                      color: '#ffffff',
+                      fontWeight: 500,
+                      wordBreak: 'break-all',
+                      lineHeight: 1.4,
+                      paddingLeft: '4px',
                     }}
                   >
-                    {copiedEmail ? <Check size={14} /> : <Copy size={14} />}
-                    <span>{copiedEmail ? 'Copied' : 'Copy'}</span>
-                  </button>
+                    {PERSONAL_INFO.email}
+                  </div>
                 </div>
 
-                {/* Social Links */}
-                <div style={{ display: 'flex', gap: '12px' }}>
+                {/* Social Links Grid */}
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
+                    gap: '10px',
+                    width: '100%',
+                  }}
+                >
                   <a
                     href={PERSONAL_INFO.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-secondary"
                     style={{
-                      flex: 1,
-                      padding: '12px',
-                      fontSize: '0.86rem',
+                      padding: '11px 16px',
+                      fontSize: '0.85rem',
+                      width: '100%',
+                      boxSizing: 'border-box',
                     }}
                   >
-                    <Linkedin size={16} color="#c084fc" />
+                    <Linkedin size={15} color="#c084fc" />
                     <span>LinkedIn</span>
                   </a>
 
@@ -249,12 +299,13 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     className="btn-secondary"
                     style={{
-                      flex: 1,
-                      padding: '12px',
-                      fontSize: '0.86rem',
+                      padding: '11px 16px',
+                      fontSize: '0.85rem',
+                      width: '100%',
+                      boxSizing: 'border-box',
                     }}
                   >
-                    <Github size={16} color="#c084fc" />
+                    <Github size={15} color="#c084fc" />
                     <span>GitHub</span>
                   </a>
                 </div>
@@ -267,16 +318,26 @@ export default function Contact() {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '18px',
-                background: 'rgba(12, 6, 24, 0.65)',
-                padding: '32px',
-                borderRadius: '20px',
+                gap: '16px',
+                background: 'rgba(12, 6, 24, 0.7)',
+                padding: 'clamp(18px, 3.5vw, 32px)',
+                borderRadius: 'clamp(14px, 2.5vw, 20px)',
                 border: '1px solid rgba(168, 85, 247, 0.25)',
+                width: '100%',
+                boxSizing: 'border-box',
+                minWidth: 0,
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
                 <Terminal size={15} color="#c084fc" />
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: '#e9d5ff' }}>
+                <span
+                  style={{
+                    fontFamily: 'var(--font-mono)',
+                    fontSize: '0.74rem',
+                    color: '#e9d5ff',
+                    letterSpacing: '0.06em',
+                  }}
+                >
                   INITIALIZE SECURE INQUIRY
                 </span>
               </div>
@@ -286,7 +347,7 @@ export default function Contact() {
                   style={{
                     display: 'block',
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.75rem',
+                    fontSize: '0.72rem',
                     color: 'var(--text-secondary)',
                     marginBottom: '6px',
                   }}
@@ -301,14 +362,15 @@ export default function Contact() {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
+                    padding: '12px 14px',
                     borderRadius: '10px',
-                    background: 'rgba(5, 5, 5, 0.6)',
+                    background: 'rgba(5, 5, 5, 0.7)',
                     border: '1px solid rgba(168, 85, 247, 0.25)',
                     color: '#ffffff',
                     fontFamily: 'var(--font-body)',
-                    fontSize: '0.92rem',
+                    fontSize: '1rem', // Prevents iOS Safari auto-zoom on focus
                     outline: 'none',
+                    boxSizing: 'border-box',
                     transition: 'border-color 0.2s ease',
                   }}
                   onFocus={(e) => (e.target.style.borderColor = 'var(--purple-neon)')}
@@ -321,7 +383,7 @@ export default function Contact() {
                   style={{
                     display: 'block',
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.75rem',
+                    fontSize: '0.72rem',
                     color: 'var(--text-secondary)',
                     marginBottom: '6px',
                   }}
@@ -336,14 +398,15 @@ export default function Contact() {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
+                    padding: '12px 14px',
                     borderRadius: '10px',
-                    background: 'rgba(5, 5, 5, 0.6)',
+                    background: 'rgba(5, 5, 5, 0.7)',
                     border: '1px solid rgba(168, 85, 247, 0.25)',
                     color: '#ffffff',
                     fontFamily: 'var(--font-body)',
-                    fontSize: '0.92rem',
+                    fontSize: '1rem', // Prevents iOS Safari auto-zoom on focus
                     outline: 'none',
+                    boxSizing: 'border-box',
                     transition: 'border-color 0.2s ease',
                   }}
                   onFocus={(e) => (e.target.style.borderColor = 'var(--purple-neon)')}
@@ -356,7 +419,7 @@ export default function Contact() {
                   style={{
                     display: 'block',
                     fontFamily: 'var(--font-mono)',
-                    fontSize: '0.75rem',
+                    fontSize: '0.72rem',
                     color: 'var(--text-secondary)',
                     marginBottom: '6px',
                   }}
@@ -371,15 +434,16 @@ export default function Contact() {
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   style={{
                     width: '100%',
-                    padding: '12px 16px',
+                    padding: '12px 14px',
                     borderRadius: '10px',
-                    background: 'rgba(5, 5, 5, 0.6)',
+                    background: 'rgba(5, 5, 5, 0.7)',
                     border: '1px solid rgba(168, 85, 247, 0.25)',
                     color: '#ffffff',
                     fontFamily: 'var(--font-body)',
-                    fontSize: '0.92rem',
+                    fontSize: '1rem', // Prevents iOS Safari auto-zoom on focus
                     outline: 'none',
                     resize: 'vertical',
+                    boxSizing: 'border-box',
                     transition: 'border-color 0.2s ease',
                   }}
                   onFocus={(e) => (e.target.style.borderColor = 'var(--purple-neon)')}
@@ -393,25 +457,27 @@ export default function Contact() {
                 className="btn-primary"
                 style={{
                   width: '100%',
-                  marginTop: '8px',
+                  marginTop: '6px',
+                  padding: '14px 20px',
+                  fontSize: '0.92rem',
                   opacity: formStatus === 'sending' ? 0.7 : 1,
                 }}
               >
                 {formStatus === 'idle' && (
                   <>
-                    <Send size={16} />
+                    <Send size={15} />
                     <span>Initialize Transmission</span>
                   </>
                 )}
                 {formStatus === 'sending' && (
                   <>
-                    <Sparkles size={16} className="animate-spin" />
+                    <Sparkles size={15} className="animate-spin" />
                     <span>Encrypting & Sending...</span>
                   </>
                 )}
                 {formStatus === 'success' && (
                   <>
-                    <Check size={16} color="#4ade80" />
+                    <Check size={15} color="#4ade80" />
                     <span style={{ color: '#4ade80' }}>Transmission Received</span>
                   </>
                 )}

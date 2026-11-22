@@ -83,7 +83,7 @@ export default function Hero() {
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        padding: '130px 24px 60px',
+        padding: 'clamp(100px, 14vh, 140px) 16px 60px',
       }}
     >
       {/* 3D WebGL Canvas Layer */}
@@ -120,6 +120,8 @@ export default function Hero() {
           flexDirection: 'column',
           alignItems: 'center',
           pointerEvents: 'none',
+          paddingLeft: '0',
+          paddingRight: '0',
         }}
       >
         {/* Top Identification Badge */}
@@ -130,9 +132,11 @@ export default function Hero() {
               boxShadow: '0 0 25px rgba(168, 85, 247, 0.35)',
               border: '1px solid rgba(192, 132, 252, 0.35)',
               background: 'rgba(15, 8, 28, 0.85)',
+              fontSize: 'clamp(0.72rem, 1.8vw, 0.8rem)',
+              padding: '6px 12px',
             }}
           >
-            <Sparkles size={14} color="#c084fc" />
+            <Sparkles size={13} color="#c084fc" />
             <span>{PERSONAL_INFO.name} // {PERSONAL_INFO.displayTag}</span>
           </div>
         </div>
@@ -142,14 +146,15 @@ export default function Hero() {
           ref={titleRef}
           className="text-gradient"
           style={{
-            fontSize: 'clamp(2.3rem, 5.8vw, 4.4rem)',
+            fontSize: 'clamp(1.85rem, 5vw, 4.4rem)',
             fontWeight: 800,
-            lineHeight: 1.1,
-            letterSpacing: '-0.03em',
-            marginBottom: '20px',
+            lineHeight: 1.12,
+            letterSpacing: '-0.025em',
+            marginBottom: '18px',
             textTransform: 'uppercase',
             maxWidth: '920px',
             textShadow: '0 4px 30px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 0, 0, 0.85)',
+            wordBreak: 'break-word',
           }}
         >
           {PERSONAL_INFO.roleHeadline}
@@ -159,12 +164,12 @@ export default function Hero() {
         <p
           ref={subtitleRef}
           style={{
-            fontSize: 'clamp(1rem, 1.8vw, 1.25rem)',
+            fontSize: 'clamp(0.92rem, 1.8vw, 1.25rem)',
             color: '#e5e7eb',
             fontFamily: 'var(--font-heading)',
             letterSpacing: '0.04em',
             maxWidth: '680px',
-            marginBottom: '36px',
+            marginBottom: '32px',
             lineHeight: 1.5,
             textShadow: '0 2px 20px rgba(0, 0, 0, 0.9)',
           }}
@@ -180,9 +185,10 @@ export default function Hero() {
             flexWrap: 'wrap',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '16px',
-            marginBottom: '48px',
+            gap: '12px',
+            marginBottom: '40px',
             pointerEvents: 'auto',
+            width: '100%',
           }}
         >
           <a
@@ -192,9 +198,9 @@ export default function Hero() {
               scrollToSection('#projects');
             }}
             className="btn-primary"
-            style={{ minWidth: '180px' }}
+            style={{ minWidth: 'min(100%, 160px)' }}
           >
-            <Layers size={18} />
+            <Layers size={17} />
             <span>Explore My Work</span>
           </a>
 
@@ -205,9 +211,9 @@ export default function Hero() {
               scrollToSection('#contact');
             }}
             className="btn-secondary"
-            style={{ minWidth: '180px' }}
+            style={{ minWidth: 'min(100%, 160px)' }}
           >
-            <Send size={18} />
+            <Send size={17} />
             <span>Contact Me</span>
           </a>
         </div>

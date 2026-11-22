@@ -208,8 +208,8 @@ export default function Skills() {
           ref={gridRef}
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '24px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
+            gap: 'clamp(16px, 2.5vw, 24px)',
           }}
         >
           {displayedCategories.map((category) => (
@@ -218,7 +218,7 @@ export default function Skills() {
                 <div
                   className="glass-panel glass-panel-hover"
                   style={{
-                    padding: '30px',
+                    padding: 'clamp(20px, 3.5vw, 30px)',
                     height: '100%',
                     display: 'flex',
                     flexDirection: 'column',

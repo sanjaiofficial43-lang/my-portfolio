@@ -275,8 +275,8 @@ export default function Projects() {
           ref={cardsRef}
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-            gap: '32px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+            gap: 'clamp(20px, 3vw, 32px)',
           }}
         >
           {PROJECTS_DATA.map((project, idx) => (
@@ -492,7 +492,7 @@ export default function Projects() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '24px',
+            padding: '16px',
           }}
           onClick={() => setSelectedProject(null)}
         >
@@ -501,7 +501,9 @@ export default function Projects() {
             style={{
               width: '100%',
               maxWidth: '650px',
-              padding: '36px',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              padding: 'clamp(20px, 4vw, 36px)',
               borderRadius: '20px',
               border: '1px solid var(--border-glow)',
               boxShadow: '0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(168, 85, 247, 0.3)',
