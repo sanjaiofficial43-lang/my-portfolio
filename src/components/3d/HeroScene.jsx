@@ -18,7 +18,8 @@ function CyberSphere({ isMobile, scrollProgress, touchRef }) {
   const ring2Ref = useRef();
   const ring3Ref = useRef();
 
-  const baseScale = isMobile ? 0.95 : 1.55;
+  // Tuned scale: visible, prominent, and beautifully framing the transparent card
+  const baseScale = isMobile ? 1.15 : 1.55;
 
   useFrame((state, delta) => {
     const time = state.clock.getElapsedTime();
@@ -38,8 +39,8 @@ function CyberSphere({ isMobile, scrollProgress, touchRef }) {
       const currentScale = baseScale * (1 - scroll * 0.35);
       groupRef.current.scale.set(currentScale, currentScale, currentScale);
 
-      const initialZ = isMobile ? -1.2 : 0;
-      const initialY = isMobile ? 0.35 : 0;
+      const initialZ = isMobile ? -0.4 : 0;
+      const initialY = isMobile ? 0.15 : 0;
       
       groupRef.current.position.z = initialZ - scroll * 4.5;
       groupRef.current.position.y = initialY + floatY - scroll * 1.8;
@@ -92,12 +93,12 @@ function CyberSphere({ isMobile, scrollProgress, touchRef }) {
       <mesh ref={meshRef}>
         <sphereGeometry args={[1, isMobile ? 32 : 64, isMobile ? 32 : 64]} />
         <MeshDistortMaterial
-          color={isMobile ? "#0c0418" : "#16082b"}
-          emissive="#6b21a8"
-          emissiveIntensity={isMobile ? 0.6 : 0.85}
+          color={isMobile ? "#120524" : "#16082b"}
+          emissive="#7e22ce"
+          emissiveIntensity={isMobile ? 0.8 : 0.9}
           roughness={0.15}
           metalness={0.9}
-          distort={isMobile ? 0.22 : 0.35}
+          distort={isMobile ? 0.25 : 0.35}
           speed={1.8}
           clearcoat={1}
           clearcoatRoughness={0.1}
@@ -111,7 +112,7 @@ function CyberSphere({ isMobile, scrollProgress, touchRef }) {
           color="#c084fc"
           wireframe
           transparent
-          opacity={isMobile ? 0.28 : 0.32}
+          opacity={isMobile ? 0.38 : 0.32}
         />
       </mesh>
 

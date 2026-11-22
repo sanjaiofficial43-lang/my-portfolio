@@ -86,27 +86,10 @@ export default function Hero() {
         padding: 'clamp(90px, 12vh, 130px) 16px 40px',
       }}
     >
-      {/* 3D WebGL Canvas Layer */}
+      {/* 3D WebGL Canvas Layer - Always Front & Center with Full Dynamic Motion */}
       <HeroScene />
 
-      {/* Subtle Ambient Radial Glow */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 'min(850px, 92vw)',
-          height: 'min(550px, 75vh)',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(126, 34, 206, 0.15) 0%, rgba(5, 5, 5, 0.6) 60%, transparent 80%)',
-          pointerEvents: 'none',
-          zIndex: 2,
-          filter: 'blur(30px)',
-        }}
-      />
-
-      {/* Hero Foreground Content Capsule */}
+      {/* Hero Foreground Content Capsule - Highly Translucent so 3D Motion is 100% Visible */}
       <div
         ref={contentRef}
         className="container"
@@ -121,25 +104,27 @@ export default function Hero() {
           alignItems: 'center',
           paddingLeft: '0',
           paddingRight: '0',
+          pointerEvents: 'none',
         }}
       >
-        {/* Frosted Glass HUD Card for 100% Mobile Text Visibility */}
+        {/* Slightly Transparent Frosted HUD Card allowing Background Motion to Shine Through */}
         <div
           className="hero-glass-hud"
           style={{
             width: '100%',
-            background: 'rgba(8, 4, 16, 0.72)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(168, 85, 247, 0.3)',
+            background: 'rgba(10, 4, 22, 0.22)', // Highly transparent
+            backdropFilter: 'blur(5px)', // Light blur so 3D motion is clearly visible
+            WebkitBackdropFilter: 'blur(5px)',
+            border: '1px solid rgba(168, 85, 247, 0.22)',
             borderRadius: 'clamp(20px, 4vw, 32px)',
-            padding: 'clamp(28px, 5vw, 48px) clamp(16px, 4vw, 36px)',
-            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.85), inset 0 0 35px rgba(168, 85, 247, 0.1)',
+            padding: 'clamp(24px, 5vw, 44px) clamp(16px, 4vw, 36px)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(168, 85, 247, 0.06)',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             position: 'relative',
             overflow: 'hidden',
+            pointerEvents: 'auto',
           }}
         >
           {/* Subtle Top Accent Beam */}
@@ -160,9 +145,9 @@ export default function Hero() {
             <div
               className="glass-pill"
               style={{
-                boxShadow: '0 0 20px rgba(168, 85, 247, 0.4)',
+                boxShadow: '0 0 20px rgba(168, 85, 247, 0.35)',
                 border: '1px solid rgba(192, 132, 252, 0.45)',
-                background: 'rgba(20, 10, 38, 0.9)',
+                background: 'rgba(20, 10, 38, 0.75)',
                 fontSize: 'clamp(0.72rem, 2vw, 0.82rem)',
                 padding: '6px 14px',
                 color: '#ffffff',
@@ -173,7 +158,7 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Main Heading - Solid Brilliant White with Neon Glow for 100% Sharp Visibility */}
+          {/* Main Heading - Solid Brilliant White with High-Contrast Dark Outline for 100% Readability */}
           <h1
             ref={titleRef}
             style={{
@@ -186,25 +171,25 @@ export default function Hero() {
               textTransform: 'uppercase',
               maxWidth: '820px',
               wordBreak: 'break-word',
-              textShadow: '0 2px 10px rgba(0, 0, 0, 0.95), 0 0 25px rgba(168, 85, 247, 0.85), 0 0 50px rgba(192, 132, 252, 0.45)',
+              textShadow: '0 2px 8px rgba(0, 0, 0, 1), 0 0 20px rgba(0, 0, 0, 0.95), 0 0 35px rgba(168, 85, 247, 0.85), 0 0 60px rgba(192, 132, 252, 0.45)',
             }}
           >
             {PERSONAL_INFO.roleHeadline}
           </h1>
 
-          {/* Subtitle - High-Contrast Pure White */}
+          {/* Subtitle - High-Contrast Pure White with Dark Shadow */}
           <p
             ref={subtitleRef}
             style={{
               fontSize: 'clamp(0.92rem, 2vw, 1.2rem)',
-              color: '#f3f4f6',
+              color: '#ffffff',
               fontFamily: 'var(--font-heading)',
               letterSpacing: '0.03em',
               maxWidth: '640px',
               marginBottom: '28px',
               lineHeight: 1.55,
-              textShadow: '0 2px 12px rgba(0, 0, 0, 1)',
-              fontWeight: 500,
+              textShadow: '0 2px 10px rgba(0, 0, 0, 1), 0 0 20px rgba(0, 0, 0, 0.9)',
+              fontWeight: 600,
             }}
           >
             {PERSONAL_INFO.subtitle}
@@ -268,12 +253,13 @@ export default function Hero() {
               gap: 'clamp(8px, 2vw, 18px)',
               fontFamily: 'var(--font-mono)',
               fontSize: 'clamp(0.68rem, 1.8vw, 0.74rem)',
-              color: '#d1d5db',
+              color: '#ffffff',
               letterSpacing: '0.06em',
-              background: 'rgba(15, 8, 28, 0.85)',
+              background: 'rgba(15, 8, 28, 0.65)',
               padding: '6px 14px',
               borderRadius: '9999px',
-              border: '1px solid rgba(168, 85, 247, 0.25)',
+              border: '1px solid rgba(168, 85, 247, 0.3)',
+              textShadow: '0 1px 6px rgba(0, 0, 0, 0.9)',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
