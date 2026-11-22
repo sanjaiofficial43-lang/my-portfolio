@@ -120,13 +120,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #ffffff 30%, #c084fc 75%, #a855f7 100%);
+  background: linear-gradient(135deg, #ffffff 40%, #e9d5ff 75%, #d8b4fe 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.95));
 }
 
 .text-gradient-purple {
-  background: linear-gradient(135deg, #e9d5ff 0%, #c084fc 50%, #9333ea 100%);
+  background: linear-gradient(135deg, #ffffff 10%, #e9d5ff 60%, #c084fc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

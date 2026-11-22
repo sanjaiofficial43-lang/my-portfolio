@@ -18,7 +18,8 @@ function CyberSphere({ isMobile, scrollProgress }) {
   const ring2Ref = useRef();
   const ring3Ref = useRef();
 
-  const baseScale = isMobile ? 1.15 : 1.55;
+  // Optimized scale: on mobile, slightly smaller so words are 100% visible
+  const baseScale = isMobile ? 0.88 : 1.55;
 
   useFrame((state, delta) => {
     const time = state.clock.getElapsedTime();
@@ -30,8 +31,11 @@ function CyberSphere({ isMobile, scrollProgress }) {
     if (groupRef.current) {
       const currentScale = baseScale * (1 - scroll * 0.35);
       groupRef.current.scale.set(currentScale, currentScale, currentScale);
-      groupRef.current.position.z = -scroll * 4.5;
-      groupRef.current.position.y = -scroll * 1.8;
+      
+      const initialZ = isMobile ? -1.0 : 0;
+      const initialY = isMobile ? 0.3 : 0;
+      groupRef.current.position.z = initialZ - scroll * 4.5;
+      groupRef.current.position.y = initialY - scroll * 1.8;
 
       // Mouse parallax tilt on group
       groupRef.current.rotation.x = THREE.MathUtils.lerp(
@@ -74,18 +78,18 @@ function CyberSphere({ isMobile, scrollProgress }) {
   });
 
   return (
-    <group ref={groupRef} scale={baseScale} position={[0, 0, 0]}>
+    <group ref={groupRef} scale={baseScale} position={[0, isMobile ? 0.3 : 0, isMobile ? -1.0 : 0]}>
       {/* Primary Cyber Core - Deep Obsidian with Neon Violet Emissive */}
       <mesh ref={meshRef}>
         <sphereGeometry args={[1, isMobile ? 32 : 64, isMobile ? 32 : 64]} />
         <MeshDistortMaterial
-          color="#16082b"
-          emissive="#6b21a8"
-          emissiveIntensity={0.8}
-          roughness={0.12}
-          metalness={0.92}
-          distort={isMobile ? 0.18 : 0.32}
-          speed={1.6}
+          color={isMobile ? "#0a0314" : "#16082b"}
+          emissive="#581c87"
+          emissiveIntensity={isMobile ? 0.45 : 0.8}
+          roughness={0.2}
+          metalness={0.9}
+          distort={isMobile ? 0.15 : 0.32}
+          speed={1.5}
           clearcoat={1}
           clearcoatRoughness={0.1}
         />
@@ -98,7 +102,7 @@ function CyberSphere({ isMobile, scrollProgress }) {
           color="#c084fc"
           wireframe
           transparent
-          opacity={0.3}
+          opacity={isMobile ? 0.22 : 0.3}
         />
       </mesh>
 
@@ -108,7 +112,7 @@ function CyberSphere({ isMobile, scrollProgress }) {
         <meshStandardMaterial
           color="#a855f7"
           emissive="#c084fc"
-          emissiveIntensity={1.4}
+          emissiveIntensity={isMobile ? 1.0 : 1.4}
           roughness={0.2}
           metalness={0.9}
         />
@@ -120,7 +124,7 @@ function CyberSphere({ isMobile, scrollProgress }) {
         <meshStandardMaterial
           color="#e879f9"
           emissive="#a855f7"
-          emissiveIntensity={1.1}
+          emissiveIntensity={isMobile ? 0.8 : 1.1}
           roughness={0.2}
           metalness={0.9}
         />
@@ -132,7 +136,7 @@ function CyberSphere({ isMobile, scrollProgress }) {
         <meshBasicMaterial
           color="#d8b4fe"
           transparent
-          opacity={0.35}
+          opacity={isMobile ? 0.25 : 0.35}
         />
       </mesh>
     </group>
@@ -147,7 +151,7 @@ function FloatingParticles({ count = 800, isMobile, scrollProgress }) {
   const materialRef = useRef();
 
   const [positions, colors] = useMemo(() => {
-    const actualCount = isMobile ? Math.min(count, 300) : count;
+    const actualCount = isMobile ? Math.min(count, 280) : count;
     const pos = new Float32Array(actualCount * 3);
     const col = new Float32Array(actualCount * 3);
 
@@ -228,10 +232,10 @@ function FloatingParticles({ count = 800, isMobile, scrollProgress }) {
       </bufferGeometry>
       <pointsMaterial
         ref={materialRef}
-        size={isMobile ? 0.045 : 0.065}
+        size={isMobile ? 0.04 : 0.065}
         vertexColors
         transparent
-        opacity={0.85}
+        opacity={isMobile ? 0.75 : 0.85}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
       />
@@ -242,7 +246,7 @@ function FloatingParticles({ count = 800, isMobile, scrollProgress }) {
 // ==========================================
 // 3. Camera Rig with Scroll & Mouse Control
 // ==========================================
-function CameraController({ scrollProgress }) {
+function CameraController({ isMobile, scrollProgress }) {
   const { camera } = useThree();
 
   useFrame((state) => {
@@ -250,8 +254,9 @@ function CameraController({ scrollProgress }) {
     const mouseY = state.pointer.y * 0.35;
     const scroll = scrollProgress.current;
 
-    // As user scrolls, camera smoothly pulls back and tracks
-    const targetZ = 6.2 + scroll * 4.0;
+    // Camera rig tuned for mobile and desktop
+    const baseZ = isMobile ? 6.8 : 6.2;
+    const targetZ = baseZ + scroll * 4.0;
     const targetY = -scroll * 1.5 + mouseY * 0.4;
     const targetX = mouseX * 0.6;
 
@@ -326,7 +331,7 @@ export default function HeroScene() {
       }}
     >
       <Canvas
-        camera={{ position: [0, 0, 6.2], fov: 45 }}
+        camera={{ position: [0, 0, isMobile ? 6.8 : 6.2], fov: isMobile ? 50 : 45 }}
         dpr={isMobile ? [1, 1.5] : [1, 2]}
         gl={{
           antialias: true,
@@ -341,14 +346,14 @@ export default function HeroScene() {
         <pointLight position={[6, 4, 3]} intensity={3.2} color="#c084fc" />
         <pointLight position={[0, -5, -4]} intensity={1.6} color="#9333ea" />
 
-        <CameraController scrollProgress={scrollProgress} />
+        <CameraController isMobile={isMobile} scrollProgress={scrollProgress} />
 
         <Float speed={1.4} rotationIntensity={0.5} floatIntensity={0.7}>
           <CyberSphere isMobile={isMobile} scrollProgress={scrollProgress} />
         </Float>
 
         <FloatingParticles
-          count={isMobile ? 320 : 800}
+          count={isMobile ? 280 : 800}
           isMobile={isMobile}
           scrollProgress={scrollProgress}
         />

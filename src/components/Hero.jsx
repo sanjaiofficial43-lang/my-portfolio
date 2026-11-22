@@ -26,8 +26,8 @@ export default function Hero() {
       )
         .fromTo(
           titleRef.current,
-          { opacity: 0, y: 30, filter: 'blur(10px)' },
-          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1 },
+          { opacity: 0, y: 25, filter: 'blur(8px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9 },
           '-=0.4'
         )
         .fromTo(
@@ -64,7 +64,7 @@ export default function Hero() {
           scrub: true,
         },
         opacity: 0,
-        y: -60,
+        y: -50,
         ease: 'none',
       });
     }, heroRef);
@@ -83,30 +83,30 @@ export default function Hero() {
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        padding: 'clamp(100px, 14vh, 140px) 16px 60px',
+        padding: 'clamp(90px, 12vh, 130px) 16px 40px',
       }}
     >
       {/* 3D WebGL Canvas Layer */}
       <HeroScene />
 
-      {/* Subtle Dark Vignette Backdrop behind typography to ensure high contrast */}
+      {/* Subtle Ambient Radial Glow */}
       <div
         style={{
           position: 'absolute',
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: 'min(780px, 90vw)',
-          height: 'min(500px, 70vh)',
+          width: 'min(850px, 92vw)',
+          height: 'min(550px, 75vh)',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(5, 5, 5, 0.72) 0%, rgba(5, 5, 5, 0.45) 55%, transparent 75%)',
+          background: 'radial-gradient(circle, rgba(126, 34, 206, 0.15) 0%, rgba(5, 5, 5, 0.6) 60%, transparent 80%)',
           pointerEvents: 'none',
           zIndex: 2,
-          filter: 'blur(20px)',
+          filter: 'blur(30px)',
         }}
       />
 
-      {/* Hero Foreground Content */}
+      {/* Hero Foreground Content Capsule */}
       <div
         ref={contentRef}
         className="container"
@@ -114,137 +114,180 @@ export default function Hero() {
           position: 'relative',
           zIndex: 10,
           textAlign: 'center',
-          maxWidth: '960px',
+          maxWidth: '860px',
           margin: '0 auto',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          pointerEvents: 'none',
           paddingLeft: '0',
           paddingRight: '0',
         }}
       >
-        {/* Top Identification Badge */}
-        <div ref={badgeRef} style={{ pointerEvents: 'auto', marginBottom: '20px' }}>
-          <div
-            className="glass-pill"
-            style={{
-              boxShadow: '0 0 25px rgba(168, 85, 247, 0.35)',
-              border: '1px solid rgba(192, 132, 252, 0.35)',
-              background: 'rgba(15, 8, 28, 0.85)',
-              fontSize: 'clamp(0.72rem, 1.8vw, 0.8rem)',
-              padding: '6px 12px',
-            }}
-          >
-            <Sparkles size={13} color="#c084fc" />
-            <span>{PERSONAL_INFO.name} // {PERSONAL_INFO.displayTag}</span>
-          </div>
-        </div>
-
-        {/* Main Heading */}
-        <h1
-          ref={titleRef}
-          className="text-gradient"
-          style={{
-            fontSize: 'clamp(1.85rem, 5vw, 4.4rem)',
-            fontWeight: 800,
-            lineHeight: 1.12,
-            letterSpacing: '-0.025em',
-            marginBottom: '18px',
-            textTransform: 'uppercase',
-            maxWidth: '920px',
-            textShadow: '0 4px 30px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 0, 0, 0.85)',
-            wordBreak: 'break-word',
-          }}
-        >
-          {PERSONAL_INFO.roleHeadline}
-        </h1>
-
-        {/* Subtitle */}
-        <p
-          ref={subtitleRef}
-          style={{
-            fontSize: 'clamp(0.92rem, 1.8vw, 1.25rem)',
-            color: '#e5e7eb',
-            fontFamily: 'var(--font-heading)',
-            letterSpacing: '0.04em',
-            maxWidth: '680px',
-            marginBottom: '32px',
-            lineHeight: 1.5,
-            textShadow: '0 2px 20px rgba(0, 0, 0, 0.9)',
-          }}
-        >
-          {PERSONAL_INFO.subtitle}
-        </p>
-
-        {/* Call-to-Action Buttons */}
+        {/* Frosted Glass HUD Card for 100% Mobile Text Visibility */}
         <div
-          ref={ctaRef}
+          className="hero-glass-hud"
           style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '12px',
-            marginBottom: '40px',
-            pointerEvents: 'auto',
             width: '100%',
-          }}
-        >
-          <a
-            href="#projects"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('#projects');
-            }}
-            className="btn-primary"
-            style={{ minWidth: 'min(100%, 160px)' }}
-          >
-            <Layers size={17} />
-            <span>Explore My Work</span>
-          </a>
-
-          <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection('#contact');
-            }}
-            className="btn-secondary"
-            style={{ minWidth: 'min(100%, 160px)' }}
-          >
-            <Send size={17} />
-            <span>Contact Me</span>
-          </a>
-        </div>
-
-        {/* Futuristic System Coordinates & Telemetry */}
-        <div
-          ref={metaRef}
-          style={{
+            background: 'rgba(8, 4, 16, 0.72)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            border: '1px solid rgba(168, 85, 247, 0.3)',
+            borderRadius: 'clamp(20px, 4vw, 32px)',
+            padding: 'clamp(28px, 5vw, 48px) clamp(16px, 4vw, 36px)',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.85), inset 0 0 35px rgba(168, 85, 247, 0.1)',
             display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '24px',
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.75rem',
-            color: 'var(--text-muted)',
-            letterSpacing: '0.08em',
-            background: 'rgba(10, 5, 20, 0.7)',
-            padding: '8px 18px',
-            borderRadius: '9999px',
-            border: '1px solid rgba(168, 85, 247, 0.15)',
-            backdropFilter: 'blur(8px)',
+            flexDirection: 'column',
+            alignItems: 'center',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ color: 'var(--purple-light)' }}>LATENCY:</span> 12ms (STREAMING)
+          {/* Subtle Top Accent Beam */}
+          <div
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: '20%',
+              right: '20%',
+              height: '2px',
+              background: 'linear-gradient(90deg, transparent, #c084fc, transparent)',
+              boxShadow: '0 0 12px #a855f7',
+            }}
+          />
+
+          {/* Top Identification Badge */}
+          <div ref={badgeRef} style={{ marginBottom: '18px' }}>
+            <div
+              className="glass-pill"
+              style={{
+                boxShadow: '0 0 20px rgba(168, 85, 247, 0.4)',
+                border: '1px solid rgba(192, 132, 252, 0.45)',
+                background: 'rgba(20, 10, 38, 0.9)',
+                fontSize: 'clamp(0.72rem, 2vw, 0.82rem)',
+                padding: '6px 14px',
+                color: '#ffffff',
+              }}
+            >
+              <Sparkles size={13} color="#c084fc" />
+              <span>{PERSONAL_INFO.name} // {PERSONAL_INFO.displayTag}</span>
+            </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ color: 'var(--purple-light)' }}>NEURAL.CORE:</span> v4.8 ACTIVE
+
+          {/* Main Heading - Pure White to Silver Violet for 100% Razor Sharp Visibility */}
+          <h1
+            ref={titleRef}
+            style={{
+              color: '#ffffff',
+              background: 'linear-gradient(180deg, #ffffff 0%, #ffffff 65%, #e9d5ff 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontSize: 'clamp(1.75rem, 5vw, 3.8rem)',
+              fontWeight: 800,
+              lineHeight: 1.15,
+              letterSpacing: '-0.02em',
+              marginBottom: '16px',
+              textTransform: 'uppercase',
+              maxWidth: '820px',
+              wordBreak: 'break-word',
+              filter: 'drop-shadow(0 2px 14px rgba(0, 0, 0, 1)) drop-shadow(0 0 24px rgba(168, 85, 247, 0.45))',
+            }}
+          >
+            {PERSONAL_INFO.roleHeadline}
+          </h1>
+
+          {/* Subtitle - High-Contrast Pure White with Dark Shadow */}
+          <p
+            ref={subtitleRef}
+            style={{
+              fontSize: 'clamp(0.92rem, 2vw, 1.2rem)',
+              color: '#f3f4f6',
+              fontFamily: 'var(--font-heading)',
+              letterSpacing: '0.03em',
+              maxWidth: '640px',
+              marginBottom: '28px',
+              lineHeight: 1.55,
+              textShadow: '0 2px 12px rgba(0, 0, 0, 1)',
+              fontWeight: 500,
+            }}
+          >
+            {PERSONAL_INFO.subtitle}
+          </p>
+
+          {/* Call-to-Action Buttons */}
+          <div
+            ref={ctaRef}
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '12px',
+              marginBottom: '28px',
+              width: '100%',
+            }}
+          >
+            <a
+              href="#projects"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('#projects');
+              }}
+              className="btn-primary"
+              style={{
+                minWidth: 'clamp(140px, 40vw, 180px)',
+                padding: '12px 24px',
+                fontSize: '0.92rem',
+              }}
+            >
+              <Layers size={17} />
+              <span>Explore My Work</span>
+            </a>
+
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection('#contact');
+              }}
+              className="btn-secondary"
+              style={{
+                minWidth: 'clamp(140px, 40vw, 180px)',
+                padding: '12px 24px',
+                fontSize: '0.92rem',
+              }}
+            >
+              <Send size={17} />
+              <span>Contact Me</span>
+            </a>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ color: 'var(--purple-light)' }}>SPACE:</span> WEBGL / THREE.JS
+
+          {/* Futuristic System Coordinates & Telemetry */}
+          <div
+            ref={metaRef}
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: 'clamp(8px, 2vw, 18px)',
+              fontFamily: 'var(--font-mono)',
+              fontSize: 'clamp(0.68rem, 1.8vw, 0.74rem)',
+              color: '#d1d5db',
+              letterSpacing: '0.06em',
+              background: 'rgba(15, 8, 28, 0.85)',
+              padding: '6px 14px',
+              borderRadius: '9999px',
+              border: '1px solid rgba(168, 85, 247, 0.25)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <span style={{ color: '#c084fc' }}>LATENCY:</span> 12ms
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <span style={{ color: '#c084fc' }}>NEURAL.CORE:</span> v4.8 ACTIVE
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <span style={{ color: '#c084fc' }}>SPACE:</span> WEBGL
+            </div>
           </div>
         </div>
       </div>
@@ -254,13 +297,13 @@ export default function Hero() {
         ref={scrollIndicatorRef}
         style={{
           position: 'absolute',
-          bottom: '26px',
+          bottom: '16px',
           left: '50%',
           transform: 'translateX(-50%)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '8px',
+          gap: '6px',
           cursor: 'pointer',
           zIndex: 10,
         }}
@@ -269,8 +312,8 @@ export default function Hero() {
         <span
           style={{
             fontFamily: 'var(--font-mono)',
-            fontSize: '0.7rem',
-            letterSpacing: '0.15em',
+            fontSize: '0.68rem',
+            letterSpacing: '0.12em',
             color: 'var(--text-muted)',
             textTransform: 'uppercase',
           }}
@@ -279,13 +322,13 @@ export default function Hero() {
         </span>
         <div
           style={{
-            width: '24px',
-            height: '38px',
+            width: '22px',
+            height: '34px',
             borderRadius: '9999px',
-            border: '2px solid rgba(168, 85, 247, 0.45)',
+            border: '2px solid rgba(168, 85, 247, 0.4)',
             display: 'flex',
             justifyContent: 'center',
-            paddingTop: '6px',
+            paddingTop: '5px',
             background: 'rgba(15, 8, 28, 0.6)',
             backdropFilter: 'blur(8px)',
           }}
@@ -293,10 +336,10 @@ export default function Hero() {
           <div
             style={{
               width: '4px',
-              height: '8px',
+              height: '7px',
               borderRadius: '9999px',
               backgroundColor: 'var(--purple-neon)',
-              boxShadow: '0 0 10px var(--purple-neon)',
+              boxShadow: '0 0 8px var(--purple-neon)',
               animation: 'scrollPulse 2s cubic-bezier(0.65, 0, 0.35, 1) infinite',
             }}
           />
@@ -306,7 +349,7 @@ export default function Hero() {
       <style>{`
         @keyframes scrollPulse {
           0% { transform: translateY(0); opacity: 1; }
-          50% { transform: translateY(12px); opacity: 0.2; }
+          50% { transform: translateY(10px); opacity: 0.2; }
           100% { transform: translateY(0); opacity: 1; }
         }
       `}</style>
