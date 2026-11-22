@@ -8,9 +8,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 // ==========================================
-// 1. Interactive 3D Cyber Sphere
+// 1. Interactive 3D Cyber Sphere (Mobile & Desktop)
 // ==========================================
-function CyberSphere({ isMobile, scrollProgress }) {
+function CyberSphere({ isMobile, scrollProgress, touchRef }) {
   const groupRef = useRef();
   const meshRef = useRef();
   const wireframeRef = useRef();
@@ -18,101 +18,110 @@ function CyberSphere({ isMobile, scrollProgress }) {
   const ring2Ref = useRef();
   const ring3Ref = useRef();
 
-  // Optimized scale: on mobile, slightly smaller so words are 100% visible
-  const baseScale = isMobile ? 0.88 : 1.55;
+  const baseScale = isMobile ? 0.95 : 1.55;
 
   useFrame((state, delta) => {
     const time = state.clock.getElapsedTime();
-    const mouseX = state.pointer.x * 0.35;
-    const mouseY = state.pointer.y * 0.35;
+    
+    // Combine mouse and mobile touch inputs
+    const inputX = (state.pointer.x || touchRef.current.x) * 0.4;
+    const inputY = (state.pointer.y || touchRef.current.y) * 0.4;
     const scroll = scrollProgress.current;
 
-    // Outer group scroll response: moves away, scales, and tilts on scroll
+    // Organic continuous floating motion so sphere is always alive on mobile
+    const floatY = Math.sin(time * 1.2) * 0.12;
+    const floatX = Math.cos(time * 0.9) * 0.08;
+    const floatRotZ = Math.sin(time * 0.8) * 0.15;
+    const floatRotX = Math.cos(time * 1.0) * 0.12;
+
     if (groupRef.current) {
       const currentScale = baseScale * (1 - scroll * 0.35);
       groupRef.current.scale.set(currentScale, currentScale, currentScale);
-      
-      const initialZ = isMobile ? -1.0 : 0;
-      const initialY = isMobile ? 0.3 : 0;
-      groupRef.current.position.z = initialZ - scroll * 4.5;
-      groupRef.current.position.y = initialY - scroll * 1.8;
 
-      // Mouse parallax tilt on group
+      const initialZ = isMobile ? -1.2 : 0;
+      const initialY = isMobile ? 0.35 : 0;
+      
+      groupRef.current.position.z = initialZ - scroll * 4.5;
+      groupRef.current.position.y = initialY + floatY - scroll * 1.8;
+      groupRef.current.position.x = floatX;
+
+      // Dynamic tilt responding to touch/mouse + organic breathing
       groupRef.current.rotation.x = THREE.MathUtils.lerp(
         groupRef.current.rotation.x,
-        mouseY * 0.4,
-        0.05
+        inputY + floatRotX,
+        0.06
       );
       groupRef.current.rotation.y = THREE.MathUtils.lerp(
         groupRef.current.rotation.y,
-        mouseX * 0.4,
-        0.05
+        inputX + time * 0.2,
+        0.06
       );
+      groupRef.current.rotation.z = floatRotZ;
     }
 
-    // Core mesh rotation: accelerates on scroll
+    // Core mesh continuous rotation & pulse
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * (0.25 + scroll * 0.8);
-      meshRef.current.rotation.x += delta * 0.1;
+      meshRef.current.rotation.y += delta * (0.35 + scroll * 0.8);
+      meshRef.current.rotation.x += delta * 0.15;
     }
 
     // Counter-rotating holographic wireframe shell
     if (wireframeRef.current) {
-      wireframeRef.current.rotation.y -= delta * (0.2 + scroll * 0.5);
-      wireframeRef.current.rotation.z += delta * 0.15;
+      wireframeRef.current.rotation.y -= delta * (0.25 + scroll * 0.5);
+      wireframeRef.current.rotation.z += delta * 0.18;
     }
 
-    // Gyroscopic energy rings
+    // Dynamic gyroscopic rings in full motion
     if (ring1Ref.current) {
-      ring1Ref.current.rotation.x = time * 0.45;
-      ring1Ref.current.rotation.y = time * 0.25;
+      ring1Ref.current.rotation.x = time * 0.55;
+      ring1Ref.current.rotation.y = time * 0.35;
     }
     if (ring2Ref.current) {
-      ring2Ref.current.rotation.x = -time * 0.35;
-      ring2Ref.current.rotation.z = time * 0.3;
+      ring2Ref.current.rotation.x = -time * 0.45;
+      ring2Ref.current.rotation.z = time * 0.4;
     }
     if (ring3Ref.current) {
-      ring3Ref.current.rotation.y = -time * 0.4;
-      ring3Ref.current.rotation.z = -time * 0.2;
+      ring3Ref.current.rotation.y = -time * 0.5;
+      ring3Ref.current.rotation.z = -time * 0.25;
     }
   });
 
   return (
-    <group ref={groupRef} scale={baseScale} position={[0, isMobile ? 0.3 : 0, isMobile ? -1.0 : 0]}>
-      {/* Primary Cyber Core - Deep Obsidian with Neon Violet Emissive */}
+    <group ref={groupRef} scale={baseScale}>
+      {/* Primary Cyber Core */}
       <mesh ref={meshRef}>
         <sphereGeometry args={[1, isMobile ? 32 : 64, isMobile ? 32 : 64]} />
         <MeshDistortMaterial
-          color={isMobile ? "#0a0314" : "#16082b"}
-          emissive="#581c87"
-          emissiveIntensity={isMobile ? 0.45 : 0.8}
-          roughness={0.2}
+          color={isMobile ? "#0c0418" : "#16082b"}
+          emissive="#6b21a8"
+          emissiveIntensity={isMobile ? 0.6 : 0.85}
+          roughness={0.15}
           metalness={0.9}
-          distort={isMobile ? 0.15 : 0.32}
-          speed={1.5}
+          distort={isMobile ? 0.22 : 0.35}
+          speed={1.8}
           clearcoat={1}
           clearcoatRoughness={0.1}
         />
       </mesh>
 
-      {/* Holographic Geometric Wireframe Shell */}
+      {/* Holographic Wireframe Shell */}
       <mesh ref={wireframeRef}>
         <icosahedronGeometry args={[1.18, isMobile ? 2 : 3]} />
         <meshBasicMaterial
           color="#c084fc"
           wireframe
           transparent
-          opacity={isMobile ? 0.22 : 0.3}
+          opacity={isMobile ? 0.28 : 0.32}
         />
       </mesh>
 
       {/* Orbiting Gyroscopic Ring 1 */}
       <mesh ref={ring1Ref}>
-        <torusGeometry args={[1.42, 0.012, 16, 64]} />
+        <torusGeometry args={[1.42, 0.014, 16, 64]} />
         <meshStandardMaterial
           color="#a855f7"
           emissive="#c084fc"
-          emissiveIntensity={isMobile ? 1.0 : 1.4}
+          emissiveIntensity={1.3}
           roughness={0.2}
           metalness={0.9}
         />
@@ -120,11 +129,11 @@ function CyberSphere({ isMobile, scrollProgress }) {
 
       {/* Orbiting Gyroscopic Ring 2 */}
       <mesh ref={ring2Ref}>
-        <torusGeometry args={[1.6, 0.01, 16, 64]} />
+        <torusGeometry args={[1.6, 0.011, 16, 64]} />
         <meshStandardMaterial
           color="#e879f9"
           emissive="#a855f7"
-          emissiveIntensity={isMobile ? 0.8 : 1.1}
+          emissiveIntensity={1.0}
           roughness={0.2}
           metalness={0.9}
         />
@@ -132,11 +141,11 @@ function CyberSphere({ isMobile, scrollProgress }) {
 
       {/* Orbiting Gyroscopic Ring 3 */}
       <mesh ref={ring3Ref}>
-        <torusGeometry args={[1.76, 0.008, 16, 64]} />
+        <torusGeometry args={[1.76, 0.009, 16, 64]} />
         <meshBasicMaterial
           color="#d8b4fe"
           transparent
-          opacity={isMobile ? 0.25 : 0.35}
+          opacity={0.35}
         />
       </mesh>
     </group>
@@ -144,14 +153,14 @@ function CyberSphere({ isMobile, scrollProgress }) {
 }
 
 // ==========================================
-// 2. Swirling Floating Particle Field
+// 2. Swirling Floating Particle Vortex (Continuous Motion)
 // ==========================================
-function FloatingParticles({ count = 800, isMobile, scrollProgress }) {
+function FloatingParticles({ count = 800, isMobile, scrollProgress, touchRef }) {
   const pointsRef = useRef();
   const materialRef = useRef();
 
   const [positions, colors] = useMemo(() => {
-    const actualCount = isMobile ? Math.min(count, 280) : count;
+    const actualCount = isMobile ? Math.min(count, 320) : count;
     const pos = new Float32Array(actualCount * 3);
     const col = new Float32Array(actualCount * 3);
 
@@ -164,7 +173,7 @@ function FloatingParticles({ count = 800, isMobile, scrollProgress }) {
     ];
 
     for (let i = 0; i < actualCount; i++) {
-      const radius = THREE.MathUtils.randFloat(2.6, 9.5);
+      const radius = THREE.MathUtils.randFloat(2.5, 9.5);
       const theta = THREE.MathUtils.randFloat(0, Math.PI * 2);
       const phi = THREE.MathUtils.randFloat(-Math.PI / 2, Math.PI / 2);
 
@@ -182,35 +191,31 @@ function FloatingParticles({ count = 800, isMobile, scrollProgress }) {
   }, [count, isMobile]);
 
   useFrame((state, delta) => {
+    const time = state.clock.getElapsedTime();
     const scroll = scrollProgress.current;
 
     if (pointsRef.current) {
-      const scrollSpeed = 1 + scroll * 2.2;
-      pointsRef.current.rotation.y += delta * 0.08 * scrollSpeed;
-      pointsRef.current.rotation.x += delta * 0.04 * scrollSpeed;
+      // Continuous organic vortex motion
+      pointsRef.current.rotation.y += delta * (0.12 + scroll * 0.8);
+      pointsRef.current.rotation.x = Math.sin(time * 0.6) * 0.15;
+      pointsRef.current.position.y = Math.cos(time * 0.8) * 0.15;
 
-      // Mouse parallax
-      const mouseX = state.pointer.x * 0.35;
-      const mouseY = state.pointer.y * 0.35;
+      // Parallax with touch / mouse
+      const inputX = (state.pointer.x || touchRef.current.x) * 0.3;
+      const inputY = (state.pointer.y || touchRef.current.y) * 0.3;
       pointsRef.current.position.x = THREE.MathUtils.lerp(
         pointsRef.current.position.x,
-        mouseX,
-        0.05
-      );
-      pointsRef.current.position.y = THREE.MathUtils.lerp(
-        pointsRef.current.position.y,
-        mouseY,
+        inputX,
         0.05
       );
 
-      // Particles disperse and spread outwards as user scrolls
-      const spread = 1 + scroll * 1.4;
+      // Disperse and expand on scroll
+      const spread = 1 + scroll * 1.3;
       pointsRef.current.scale.set(spread, spread, spread);
     }
 
-    // Particles fade as user scrolls
     if (materialRef.current) {
-      materialRef.current.opacity = Math.max(0.12, 0.85 - scroll * 0.8);
+      materialRef.current.opacity = Math.max(0.15, 0.85 - scroll * 0.8);
     }
   });
 
@@ -232,10 +237,10 @@ function FloatingParticles({ count = 800, isMobile, scrollProgress }) {
       </bufferGeometry>
       <pointsMaterial
         ref={materialRef}
-        size={isMobile ? 0.04 : 0.065}
+        size={isMobile ? 0.045 : 0.065}
         vertexColors
         transparent
-        opacity={isMobile ? 0.75 : 0.85}
+        opacity={0.85}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
       />
@@ -244,21 +249,24 @@ function FloatingParticles({ count = 800, isMobile, scrollProgress }) {
 }
 
 // ==========================================
-// 3. Camera Rig with Scroll & Mouse Control
+// 3. Camera Rig with Scroll & Motion Control
 // ==========================================
-function CameraController({ isMobile, scrollProgress }) {
+function CameraController({ isMobile, scrollProgress, touchRef }) {
   const { camera } = useThree();
 
   useFrame((state) => {
-    const mouseX = state.pointer.x * 0.35;
-    const mouseY = state.pointer.y * 0.35;
+    const time = state.clock.getElapsedTime();
+    const inputX = (state.pointer.x || touchRef.current.x) * 0.3;
+    const inputY = (state.pointer.y || touchRef.current.y) * 0.3;
     const scroll = scrollProgress.current;
 
-    // Camera rig tuned for mobile and desktop
-    const baseZ = isMobile ? 6.8 : 6.2;
-    const targetZ = baseZ + scroll * 4.0;
-    const targetY = -scroll * 1.5 + mouseY * 0.4;
-    const targetX = mouseX * 0.6;
+    // Organic breathing movement
+    const floatY = Math.sin(time * 0.8) * 0.08;
+
+    const baseZ = isMobile ? 6.6 : 6.2;
+    const targetZ = baseZ + scroll * 3.8;
+    const targetY = -scroll * 1.5 + inputY * 0.4 + floatY;
+    const targetX = inputX * 0.5;
 
     camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.08);
     camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.08);
@@ -277,6 +285,7 @@ export default function HeroScene() {
   const [isMobile, setIsMobile] = useState(false);
   const [webGLSupported, setWebGLSupported] = useState(true);
   const scrollProgress = useRef(0);
+  const touchRef = useRef({ x: 0, y: 0 });
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -285,6 +294,17 @@ export default function HeroScene() {
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
+
+    // Track touch interactions on mobile so 3D scene moves on finger swipe
+    const handleTouchMove = (e) => {
+      if (e.touches && e.touches.length > 0) {
+        const touch = e.touches[0];
+        touchRef.current.x = (touch.clientX / window.innerWidth) * 2 - 1;
+        touchRef.current.y = -(touch.clientY / window.innerHeight) * 2 + 1;
+      }
+    };
+
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
     try {
       const canvas = document.createElement('canvas');
@@ -298,7 +318,7 @@ export default function HeroScene() {
       trigger: '#hero',
       start: 'top top',
       end: 'bottom top',
-      scrub: 1,
+      scrub: 0.6,
       onUpdate: (self) => {
         scrollProgress.current = self.progress;
       },
@@ -306,6 +326,7 @@ export default function HeroScene() {
 
     return () => {
       window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('touchmove', handleTouchMove);
       trigger.kill();
     };
   }, []);
@@ -331,7 +352,7 @@ export default function HeroScene() {
       }}
     >
       <Canvas
-        camera={{ position: [0, 0, isMobile ? 6.8 : 6.2], fov: isMobile ? 50 : 45 }}
+        camera={{ position: [0, 0, isMobile ? 6.6 : 6.2], fov: isMobile ? 48 : 45 }}
         dpr={isMobile ? [1, 1.5] : [1, 2]}
         gl={{
           antialias: true,
@@ -340,22 +361,23 @@ export default function HeroScene() {
         }}
         style={{ pointerEvents: 'auto' }}
       >
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[5, 8, 5]} intensity={1.4} color="#e9d5ff" />
-        <pointLight position={[-6, -4, 2]} intensity={2.2} color="#7e22ce" />
-        <pointLight position={[6, 4, 3]} intensity={3.2} color="#c084fc" />
-        <pointLight position={[0, -5, -4]} intensity={1.6} color="#9333ea" />
+        <ambientLight intensity={0.45} />
+        <directionalLight position={[5, 8, 5]} intensity={1.5} color="#e9d5ff" />
+        <pointLight position={[-6, -4, 2]} intensity={2.4} color="#7e22ce" />
+        <pointLight position={[6, 4, 3]} intensity={3.4} color="#c084fc" />
+        <pointLight position={[0, -5, -4]} intensity={1.8} color="#9333ea" />
 
-        <CameraController isMobile={isMobile} scrollProgress={scrollProgress} />
+        <CameraController isMobile={isMobile} scrollProgress={scrollProgress} touchRef={touchRef} />
 
-        <Float speed={1.4} rotationIntensity={0.5} floatIntensity={0.7}>
-          <CyberSphere isMobile={isMobile} scrollProgress={scrollProgress} />
+        <Float speed={2.0} rotationIntensity={0.8} floatIntensity={1.0}>
+          <CyberSphere isMobile={isMobile} scrollProgress={scrollProgress} touchRef={touchRef} />
         </Float>
 
         <FloatingParticles
-          count={isMobile ? 280 : 800}
+          count={isMobile ? 320 : 800}
           isMobile={isMobile}
           scrollProgress={scrollProgress}
+          touchRef={touchRef}
         />
       </Canvas>
     </div>

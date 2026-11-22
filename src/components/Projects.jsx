@@ -223,6 +223,24 @@ export default function Projects() {
     el.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.015, 1.015, 1.015)`;
   };
 
+  const handleCardTouchMove = (e, index) => {
+    if (e.touches && e.touches.length > 0) {
+      const el = document.getElementById(`project-card-${index}`);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const touch = e.touches[0];
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotX = ((y - centerY) / centerY) * -8;
+      const rotY = ((x - centerX) / centerX) * 8;
+
+      el.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
+    }
+  };
+
   const handleCardMouseLeave = (index) => {
     const el = document.getElementById(`project-card-${index}`);
     if (!el) return;
@@ -285,6 +303,8 @@ export default function Projects() {
               className="project-card-wrapper"
               onMouseMove={(e) => handleCardMouseMove(e, idx)}
               onMouseLeave={() => handleCardMouseLeave(idx)}
+              onTouchMove={(e) => handleCardTouchMove(e, idx)}
+              onTouchEnd={() => handleCardMouseLeave(idx)}
               style={{
                 perspective: '1000px',
               }}

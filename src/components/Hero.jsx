@@ -22,30 +22,30 @@ export default function Hero() {
       tl.fromTo(
         badgeRef.current,
         { opacity: 0, y: -20, scale: 0.9 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.8, delay: 0.2 }
+        { opacity: 1, y: 0, scale: 1, duration: 0.8, delay: 0.15 }
       )
         .fromTo(
           titleRef.current,
-          { opacity: 0, y: 25, filter: 'blur(8px)' },
-          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.9 },
+          { opacity: 0, y: 25 },
+          { opacity: 1, y: 0, duration: 0.85 },
           '-=0.4'
         )
         .fromTo(
           subtitleRef.current,
           { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.8 },
-          '-=0.6'
+          { opacity: 1, y: 0, duration: 0.75 },
+          '-=0.5'
         )
         .fromTo(
           ctaRef.current,
           { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.8 },
+          { opacity: 1, y: 0, duration: 0.75 },
           '-=0.5'
         )
         .fromTo(
           metaRef.current,
           { opacity: 0 },
-          { opacity: 1, duration: 0.8 },
+          { opacity: 1, duration: 0.75 },
           '-=0.4'
         )
         .fromTo(
@@ -55,7 +55,7 @@ export default function Hero() {
           '-=0.3'
         );
 
-      // Subtle scroll fade for hero typography content as user scrolls down
+      // Smooth scroll choreography
       gsap.to(contentRef.current, {
         scrollTrigger: {
           trigger: heroRef.current,
@@ -173,15 +173,12 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Main Heading - Pure White to Silver Violet for 100% Razor Sharp Visibility */}
+          {/* Main Heading - Solid Brilliant White with Neon Glow for 100% Sharp Visibility */}
           <h1
             ref={titleRef}
             style={{
               color: '#ffffff',
-              background: 'linear-gradient(180deg, #ffffff 0%, #ffffff 65%, #e9d5ff 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              fontSize: 'clamp(1.75rem, 5vw, 3.8rem)',
+              fontSize: 'clamp(1.75rem, 5.2vw, 3.8rem)',
               fontWeight: 800,
               lineHeight: 1.15,
               letterSpacing: '-0.02em',
@@ -189,13 +186,13 @@ export default function Hero() {
               textTransform: 'uppercase',
               maxWidth: '820px',
               wordBreak: 'break-word',
-              filter: 'drop-shadow(0 2px 14px rgba(0, 0, 0, 1)) drop-shadow(0 0 24px rgba(168, 85, 247, 0.45))',
+              textShadow: '0 2px 10px rgba(0, 0, 0, 0.95), 0 0 25px rgba(168, 85, 247, 0.85), 0 0 50px rgba(192, 132, 252, 0.45)',
             }}
           >
             {PERSONAL_INFO.roleHeadline}
           </h1>
 
-          {/* Subtitle - High-Contrast Pure White with Dark Shadow */}
+          {/* Subtitle - High-Contrast Pure White */}
           <p
             ref={subtitleRef}
             style={{

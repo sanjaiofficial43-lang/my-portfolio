@@ -12,53 +12,63 @@ let lenisInstance = null;
 export function initSmoothScroll() {
   if (typeof window === 'undefined') return null;
 
-  // Check if reduced motion is preferred
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) {
-    return null;
-  }
-
   // Avoid multiple instances
   if (lenisInstance) {
     lenisInstance.destroy();
   }
 
-  lenisInstance = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    orientation: 'vertical',
-    gestureOrientation: 'vertical',
-    smoothWheel: true,
-    wheelMultiplier: 1.0,
-    touchMultiplier: 1.8,
-    infinite: false,
-  });
+  try {
+    lenisInstance = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.6,
+      syncTouch: true, // Syncs touch scroll directly with ScrollTrigger on mobile
+      infinite: false,
+    });
 
-  // Connect Lenis scroll to ScrollTrigger
-  lenisInstance.on('scroll', () => {
-    ScrollTrigger.update();
-  });
+    // Connect Lenis scroll to ScrollTrigger
+    lenisInstance.on('scroll', () => {
+      ScrollTrigger.update();
+    });
 
-  // Link GSAP ticker to Lenis requestAnimationFrame
-  const tickerCallback = (time) => {
-    if (lenisInstance) {
-      lenisInstance.raf(time * 1000);
-    }
-  };
+    // Link GSAP ticker to Lenis requestAnimationFrame
+    const tickerCallback = (time) => {
+      if (lenisInstance) {
+        lenisInstance.raf(time * 1000);
+      }
+    };
 
-  gsap.ticker.add(tickerCallback);
-  gsap.ticker.lagSmoothing(0);
+    gsap.ticker.add(tickerCallback);
+    gsap.ticker.lagSmoothing(0);
 
-  // Expose global clean-up
-  window.__destroySmoothScroll = () => {
-    gsap.ticker.remove(tickerCallback);
-    if (lenisInstance) {
-      lenisInstance.destroy();
-      lenisInstance = null;
-    }
-  };
+    // Native scroll listener fallback to guarantee mobile scroll events fire
+    const onNativeScroll = () => {
+      ScrollTrigger.update();
+    };
+    window.addEventListener('scroll', onNativeScroll, { passive: true });
 
-  return lenisInstance;
+    // Expose global clean-up
+    window.__destroySmoothScroll = () => {
+      gsap.ticker.remove(tickerCallback);
+      window.removeEventListener('scroll', onNativeScroll);
+      if (lenisInstance) {
+        lenisInstance.destroy();
+        lenisInstance = null;
+      }
+    };
+
+    // Initial refresh
+    ScrollTrigger.refresh();
+
+    return lenisInstance;
+  } catch (err) {
+    console.warn('Smooth scroll fallback to native', err);
+    return null;
+  }
 }
 
 export function getLenis() {
@@ -72,7 +82,7 @@ export function scrollToSection(target, options = {}) {
   if (lenisInstance) {
     lenisInstance.scrollTo(target, {
       offset: -50,
-      duration: 1.3,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       ...options,
     });

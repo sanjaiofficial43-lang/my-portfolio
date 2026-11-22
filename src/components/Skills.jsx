@@ -25,6 +25,24 @@ function TiltCard({ children, style = {} }) {
     card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
   };
 
+  const handleTouchMove = (e) => {
+    if (e.touches && e.touches.length > 0) {
+      const card = cardRef.current;
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      const touch = e.touches[0];
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+
+      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    }
+  };
+
   const handleMouseLeave = () => {
     const card = cardRef.current;
     if (!card) return;
@@ -36,6 +54,8 @@ function TiltCard({ children, style = {} }) {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleMouseLeave}
       style={{
         transition: 'transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.3s ease',
         transformStyle: 'preserve-3d',
